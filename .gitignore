@@ -1,7 +1,2 @@
-.env
-
-debug/*
-
-attendance-log-455109-d6eb90426dae.json
-
-create_zip.py
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
