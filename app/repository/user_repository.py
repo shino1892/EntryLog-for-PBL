@@ -15,7 +15,7 @@ def regist_user(conn, idm:str, student_num:int):
         with conn.cursor() as cursor:
             cursor.execute(sql,(idm, student_num,))
             conn.commit()
-            if conn.rowcount > 0:
+            if cursor.rowcount > 0:
                 return cursor.lastrowid
             else:
                 raise RuntimeError("User registration failed.")
