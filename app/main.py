@@ -50,7 +50,7 @@ def register_user_flow(conn):
 
     uR.regist_user(conn, idm, student_num)
 
-def buzzer(time, cnt):
+def buzzer(second_time, cnt):
     try:
         buzzer = GPIO(5, GPIO.OUT)
     except Exception as e:
@@ -60,7 +60,7 @@ def buzzer(time, cnt):
 
     for i in range(cnt):
         buzzer.write(1)
-        time.sleep(time)
+        time.sleep(second_time)
         buzzer.write(0)
         time.sleep(0.5)
 
@@ -76,12 +76,12 @@ def led_off():
     prefix = 0xC0 | ((255 - r) >> 2 & 0x30) | ((255 - g) >> 2 & 0x0C) | ((255 - b) >> 2 & 0x03)
     spi.xfer2([prefix, b, g, r] + [0x00]*4)
 
-def led_on(r, g, b, time):
-    if(time == 0):
+def led_on(r, g, b, second_time):
+    if(second_time == 0):
         send_color(r, g, b, 0.1)
     else:
         send_color(r, g, b, 0.1)
-        time.sleep(time)
+        time.sleep(second_time)
         led_off()
     
 # メインメニュー
