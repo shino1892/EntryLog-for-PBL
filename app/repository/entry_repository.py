@@ -1,10 +1,10 @@
 import mysql
 
-def add_entry(conn, idm:str, timestamp):
+def add_entry(conn, student_num:int, timestamp):
     try:
         sql = "INSERT INTO entry (student_num,timestamp) VALUES (%s,%s)"
         with conn.cursor() as cursor:
-            cursor.execute(sql,(idm,timestamp,))
+            cursor.execute(sql,(student_num, timestamp,))
             conn.commit()
             if cursor.rowcount > 0:
                 return True
