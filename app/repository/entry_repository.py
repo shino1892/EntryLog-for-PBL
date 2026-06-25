@@ -1,3 +1,5 @@
+import mysql
+
 def add_entry(conn, idm:str, timestamp):
     try:
         sql = "INSERT INTO entry (num,timestamp) VALUES (%s,%s)"
