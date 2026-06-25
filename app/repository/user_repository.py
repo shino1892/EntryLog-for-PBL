@@ -1,6 +1,6 @@
 def get_user_by_idm(conn, idm:str):
     try:
-        sql = "SELECT id, idm, student_num FROM users WHERE = %s"
+        sql = "SELECT id, idm, student_num FROM users WHERE idm = %s"
         with conn.cursor(dictionary = True) as cursor:
             cursor.execute(sql,(idm,))
             res = cursor.fetchone()
