@@ -10,15 +10,15 @@ import app.repository.user_repository as uR
 from app.log.logger_config import error_logger
 
 # FelicaのIDmを処理
-def process_card(idm):
+def process_card(conn, idm):
     # サーバーへ送信（既存処理とは独立して実行）
-    result = uR.get_user_by_idm(idm)
+    result = uR.get_user_by_idm(conn, idm)
 
     if result:
         student_num = result['student_num']  # 出席番号を取得
         timestamp = time.strftime("%Y-%m-%d %H:%M:00")
         
-        if eR.add_entry(student_num,timestamp):
+        if eR.add_entry(conn, student_num,timestamp):
             print(f"Recorded timestamp for student number {student_num} ({timestamp})") # 音で通知「ピッ」
             buzzer(0.1,1)
         else:
@@ -29,7 +29,7 @@ def process_card(idm):
         buzzer(0.1,2)
 
 # ユーザー登録
-def register_user_flow():
+def register_user_flow(conn):
     idm = ""
     print("Please scan your Felica card.")
     while idm == "" or idm == "0000000000000000":
@@ -48,7 +48,7 @@ def register_user_flow():
         else:
             print("Error: Student number must be numeric.")
 
-    uR.regist_user(idm, student_num)
+    uR.regist_user(conn, idm, student_num)
 
 def buzzer(time, cnt):
     try:
@@ -98,7 +98,7 @@ def main_loop():
             choice = input("Select an option: ")
 
             if choice == "1":
-                register_user_flow()
+                register_user_flow(conn)
             elif choice == "2":
                 # LEDを緑色表示
                 led_on(0, 255, 0, 0)
@@ -108,7 +108,7 @@ def main_loop():
                         try:
                             idm = get_felica_idm()
                             if idm != "" and idm != '0000000000000000':
-                                process_card(idm)
+                                process_card(conn, idm)
                                 time.sleep(2)
                         except Exception as e:
                             error_logger.error("Failed to get Felica IDm.", exc_info=True)
