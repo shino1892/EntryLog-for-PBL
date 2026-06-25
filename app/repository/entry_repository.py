@@ -6,7 +6,7 @@ def add_entry(conn, idm:str, timestamp):
         with conn.cursor() as cursor:
             cursor.execute(sql,(idm,timestamp,))
             conn.commit()
-            if conn.rowcount > 0:
+            if cursor.rowcount > 0:
                 return True
             else:
                 raise RuntimeError("Failed to Entry.")
