@@ -2,7 +2,7 @@ import mysql
 
 def add_entry(conn, idm:str, timestamp):
     try:
-        sql = "INSERT INTO entry (num,timestamp) VALUES (%s,%s)"
+        sql = "INSERT INTO entry (student_num,timestamp) VALUES (%s,%s)"
         with conn.cursor() as cursor:
             cursor.execute(sql,(idm,timestamp,))
             conn.commit()
