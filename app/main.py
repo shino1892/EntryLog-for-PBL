@@ -6,13 +6,13 @@ from grove.gpio import GPIO
 from app.utility.felica import get_felica_idm
 from app.utility.db_connect import db_connect
 import app.repository.entry_repository as eR
-import app.repository.user_repository as uR
+import app.repository.idm_repository as iR
 from app.log.logger_config import error_logger
 
 # FelicaのIDmを処理
 def process_card(conn, idm):
     # サーバーへ送信（既存処理とは独立して実行）
-    result = uR.get_user_by_idm(conn, idm)
+    result = iR.get_user_by_idm(conn, idm)
 
     if result:
         student_num = result['student_num']  # 出席番号を取得
@@ -41,14 +41,19 @@ def register_user_flow(conn):
             return # 登録フローを中断してメインメニューに戻る
 
     while True:
-        num_str = input(f"Enter the student number to register (IDm: {idm}): ")
+        num_str = input(f"Enter the User ID to register (IDm: {idm}): ")
         if num_str.isdigit():
-            student_num = int(num_str)
+            user_id = int(num_str)
             break
         else:
-            print("Error: Student number must be numeric.")
+            print("Error: User ID must be numeric.")
 
-    uR.regist_user(conn, idm, student_num)
+    result = iR.regist_user(conn, idm, user_id)
+    
+    if result:
+        print(f"Successfully registered! (IDm: {idm}, User ID: {user_id})")
+    else:
+        print("Registration failed. Please log in to OIC Web Attendance for the first time.")
 
 def buzzer(second_time, cnt):
     try:

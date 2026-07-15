@@ -1,7 +1,7 @@
 CREATE TABLE entry (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_num INT NOT NULL,
+    user_id INT NOT NULL,
     timestamp DATETIME NOT NULL,
     record_date DATE AS (DATE(timestamp)) STORED,
-    UNIQUE (student_num, record_date)
+    UNIQUE (user_id, record_date)
 );

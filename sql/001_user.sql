@@ -1,5 +1,5 @@
-CREATE TABLE users (
+CREATE TABLE idms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idm TEXT NOT NULL UNIQUE,
-    student_num INT NOT NULL
+    user_id INT NOT NULL
 );
