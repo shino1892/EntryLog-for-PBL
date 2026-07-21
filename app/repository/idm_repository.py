@@ -19,9 +19,10 @@ def regist_user(conn, idm: str, user_id: int):
             if cursor.rowcount > 0:
                 return cursor.lastrowid
             else:
+                conn.rollback()  # 挿入失敗時もロールバック
                 raise RuntimeError("User registration failed.")
     except Exception as e:
-        # 前回の質問の通り、user_id が student_users に存在しない場合は
-        # ここで外部キー制約エラー（Cannot add or update a child row...）がキャッチされます
+        # エラー発生時は確実にトランザクションを取り消してロックを解放する
+        conn.rollback()
         print(f"Database Error (regist_user): {e}")
         return None
