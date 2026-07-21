@@ -37,7 +37,7 @@ def register_user_flow(conn):
             idm = get_felica_idm()
         except Exception as e:
             error_logger.error("Failed to get Felica IDm.", exc_info=True)
-            print("Error: Failed to read the card reader. Please check the connection.")
+            print("Error: Failed to read the card reader. Please check the connection.", e)
             return # 登録フローを中断してメインメニューに戻る
 
     while True:
@@ -117,7 +117,7 @@ def main_loop():
                                 time.sleep(2)
                         except Exception as e:
                             error_logger.error("Failed to get Felica IDm.", exc_info=True)
-                            print("\nError: Failed to read the card reader. Retrying in 5 seconds.")
+                            print("\nError: Failed to read the card reader. Retrying in 5 seconds.", e)
                             # 音声でカードリーダーのエラーを通知「ピッピーー」
                             buzzer(0.1,1)
                             buzzer(0.2,1)
