@@ -15,7 +15,7 @@ def process_card(conn, idm):
     result = iR.get_user_by_idm(conn, idm)
 
     if result:
-        student_num = result['student_num']  # 出席番号を取得
+        student_num = result['user_id']  # 出席番号を取得
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
         
         if eR.add_entry(conn, student_num,timestamp):
